@@ -12,9 +12,9 @@ import com.example.web.login.LoginService;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private LoginService loginService;
-	
+    @Autowired
+    private LoginService loginService;
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -32,17 +32,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
-            	.logoutUrl("/logout.do")
-            	.logoutSuccessUrl("/login.do?logout")
-            	.invalidateHttpSession(true)
-            	.deleteCookies("JSESSIONID")
+                .logoutUrl("/logout.do")
+                .logoutSuccessUrl("/login.do?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll();
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");
     }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(loginService);
-	}   
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(loginService);
+    }   
 }
