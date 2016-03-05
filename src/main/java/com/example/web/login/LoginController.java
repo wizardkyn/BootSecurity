@@ -17,6 +17,6 @@ public class LoginController {
 	}
 	@RequestMapping(value="/logout.do")
 	public String logout(ModelMap model) {
-		return "/login/login.jsp";
+		return "redirect:/login.do?logout";
 	}
 }
