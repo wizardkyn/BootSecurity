@@ -1,5 +1,5 @@
 # BootSecurity
-Spring Boot Web with Spring Security Using Login Form and Mysql DB Authentication 
+Spring Boot Web with Spring Security Using Login Form and Mysql 
 
 # Environment
 Spring Boot 1.4.0 , Spring Security 4.0.3<br>
