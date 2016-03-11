@@ -9,26 +9,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-public class AuthenticationFilterAnotherParam extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilterObtainUsername extends UsernamePasswordAuthenticationFilter {
 	
+	private String myField;
+	private final String delimiter = ":===:";
+
+	public String getMyField() { return myField; }
+	public void setMyField(String myField) { this.myField = myField; }
+
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
-
-		final String myField = request.getParameter("myfield");
-        request.getSession().setAttribute("myfield", myField);
-
-        return super.attemptAuthentication(request, response);
+	protected String obtainUsername(HttpServletRequest request) {
+		String username = request.getParameter(getUsernameParameter());
+		String myField = request.getParameter("myfield");
+	    String combinedUsername = username + delimiter + myField;
+	    setMyField(myField);
+	    System.out.println("Combined username = " + combinedUsername);
+	    return combinedUsername;
 	}
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
+	    System.out.println("successfulAuthentication myField = " + myField);
 		setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/index.do"));
 		super.successfulAuthentication(request, response, chain, authResult);
 	}
@@ -37,7 +45,8 @@ public class AuthenticationFilterAnotherParam extends UsernamePasswordAuthentica
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
 
+	    System.out.println("unsuccessfulAuthentication myField = " + myField);
 		setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/login.do?error"));
 		super.unsuccessfulAuthentication(request, response, failed);
-	}	
+	}
 }

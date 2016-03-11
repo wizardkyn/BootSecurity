@@ -19,6 +19,8 @@ import com.example.web.sqlmappers.login.LoginMapper;
 @Service
 public class LoginService implements UserDetailsService {
 
+	private final String delimiter = ":===:";
+
 	@Resource
 	private LoginMapper loginMapper;
 	
@@ -31,7 +33,12 @@ public class LoginService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		try {
-			UserVo domainUser = getUser(userId);
+
+			String[] split = userId.split(delimiter);
+			if (split == null || split.length != 2) throw new UsernameNotFoundException("Not Found ID : " + userId);
+			
+			UserVo domainUser = getUser(split[0]);
+			System.out.println("loadUserByUsername myField = " + split[1]);
 
 			boolean enabled = true;
 			boolean accountNonExpired = true;

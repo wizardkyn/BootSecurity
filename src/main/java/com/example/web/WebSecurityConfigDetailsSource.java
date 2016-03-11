@@ -1,24 +1,22 @@
 package com.example.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.example.web.login.CustomWebAuthenticationDetailsSource;
 import com.example.web.login.LoginService;
+import com.example.web.login.LoginSuccessHandler;
 
-@Configuration
-@EnableWebSecurity
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//// with CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails , LoginSuccessHandler
+//@Configuration
+//@EnableWebSecurity
+public class WebSecurityConfigDetailsSource extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
     
@@ -27,15 +25,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+    
+    @Autowired
+    private CustomWebAuthenticationDetailsSource customWebAuthenticationDetailsSource;
 
 	@Bean
-	public AuthenticationFilterAnotherParam authenticationFilterAnotherParam() throws Exception {
-		AuthenticationFilterAnotherParam authenticationFilterAnotherParam = new AuthenticationFilterAnotherParam();
-		authenticationFilterAnotherParam.setAuthenticationManager(this.authenticationManagerBean());
-		authenticationFilterAnotherParam.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/authLogin.do","POST"));
-		return authenticationFilterAnotherParam;
+	public LoginSuccessHandler loginSuccessHandler() throws Exception{
+		LoginSuccessHandler loginSuccessHandler = new LoginSuccessHandler();
+		loginSuccessHandler.setDefaultTargetUrl("/index.do");
+		return loginSuccessHandler;
 	}
-
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	http
@@ -46,9 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
+            	.authenticationDetailsSource(customWebAuthenticationDetailsSource)
                 .loginPage("/login.do")
                 .loginProcessingUrl("/authLogin.do")
-                .defaultSuccessUrl("/index.do",true)  // true : always-use-default-target
+                .successHandler(loginSuccessHandler())
                 .failureUrl("/login.do?error")
                 .permitAll()
                 .and()
@@ -60,7 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");
-    	http.addFilterBefore(authenticationFilterAnotherParam(),UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

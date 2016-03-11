@@ -14,6 +14,7 @@ public class LoginController {
 	public String index(ModelMap model,HttpServletRequest request) {
 
 		String myField = (String)request.getSession().getAttribute("myfield");
+		System.out.println("Another input Field : " + myField);
 
 		return "/index.jsp";	
 	}
@@ -22,6 +23,7 @@ public class LoginController {
 	public String userLogin(ModelMap model) {
 		return "/login/login.jsp";
 	}
+	
 	@RequestMapping(value="/logout.do")
 	public String logout(ModelMap model,HttpServletRequest request) {
 		request.getSession().removeAttribute("myfield");
