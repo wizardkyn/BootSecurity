@@ -3,40 +3,29 @@ package com.example.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.example.web.login.CustomWebAuthenticationDetailsSource;
+import com.example.web.login.HttpsLoginSuccessHandler;
 import com.example.web.login.LoginService;
-import com.example.web.login.LoginSuccessHandler;
 
-//// with CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails , LoginSuccessHandler
-//@Configuration
-//@EnableWebSecurity
-public class WebSecurityConfigDetailsSource extends WebSecurityConfigurerAdapter {
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfigSwicthHttps extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
     
-    @Bean
-    @Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-    
-    @Autowired
-    private CustomWebAuthenticationDetailsSource customWebAuthenticationDetailsSource;
-
 	@Bean
-	public LoginSuccessHandler loginSuccessHandler() throws Exception{
-		LoginSuccessHandler loginSuccessHandler = new LoginSuccessHandler();
-		loginSuccessHandler.setDefaultTargetUrl("/index.do");
-		return loginSuccessHandler;
+	public HttpsLoginSuccessHandler httpsLoginSuccessHandler() throws Exception{
+		HttpsLoginSuccessHandler httpsLoginSuccessHandler = new HttpsLoginSuccessHandler();
+		httpsLoginSuccessHandler.setDefaultTargetUrl("http://localhost:8080/BootSecurity/index.do");
+		return httpsLoginSuccessHandler;
 	}
-	
-    @Override
+
+	@Override
     protected void configure(HttpSecurity http) throws Exception {
     	http
             .authorizeRequests()
@@ -46,10 +35,9 @@ public class WebSecurityConfigDetailsSource extends WebSecurityConfigurerAdapter
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-            	.authenticationDetailsSource(customWebAuthenticationDetailsSource)
                 .loginPage("/login.do")
                 .loginProcessingUrl("/authLogin.do")
-                .successHandler(loginSuccessHandler())
+                .successHandler(httpsLoginSuccessHandler())
                 .failureUrl("/login.do?error")
                 .permitAll()
                 .and()
@@ -59,6 +47,9 @@ public class WebSecurityConfigDetailsSource extends WebSecurityConfigurerAdapter
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();
+    	
+    	http.requiresChannel().antMatchers("/login.do","/authLogin.do","/logout.do").requiresSecure();
+    	http.sessionManagement().sessionFixation().none();
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");
     }

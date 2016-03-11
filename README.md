@@ -21,6 +21,15 @@ WebSecurityConfigDetailsSource , CustomWebAuthenticationDetailsSource , CustomWe
 3. UsernamePasswordAuthenticationFilter + UserDetailsService().loadUserByUsername<br>
 WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername , LoginService
 
+# enabled  HTTPS for my login page, switching back to HTTP afterwards.Lost Security Session
+
+WebSecurityConfigSwicthHttps , HttpsLoginSuccessHandler<br>
+1. Disable Session Fixation Attack Protection<br>
+http.sessionManagement().sessionFixation().none();
+
+2. Re-Create Session Cookie <br>
+
+
 # Tomcat Datasource JNDI
 ```
 <GlobalNamingResources>
