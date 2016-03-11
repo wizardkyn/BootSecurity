@@ -12,13 +12,13 @@ Test URL : http://localhost:8080/BootSecurity/login.do
 
 # How to add support for extra login fields in Spring Security Login Form
 
-. UsernamePasswordAuthenticationFilter + HTTP Session
+. UsernamePasswordAuthenticationFilter + HTTP Session<br>
 WebSecurityConfigAnotherParam , AuthenticationFilterAnotherParam
 
-. AuthenticationDetailsSource + SavedRequestAwareAuthenticationSuccessHandler
+. AuthenticationDetailsSource + SavedRequestAwareAuthenticationSuccessHandler<br>
 WebSecurityConfigDetailsSource , CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails
 
-. UsernamePasswordAuthenticationFilter + UserDetailsService().loadUserByUsername
+. UsernamePasswordAuthenticationFilter + UserDetailsService().loadUserByUsername<br>
 WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername
 
 # Tomcat Datasource JNDI
