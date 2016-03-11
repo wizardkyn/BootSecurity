@@ -19,7 +19,7 @@ WebSecurityConfigAnotherParam , AuthenticationFilterAnotherParam
 WebSecurityConfigDetailsSource , CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails
 
 . UsernamePasswordAuthenticationFilter + UserDetailsService().loadUserByUsername<br>
-WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername
+WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername , LoginService
 
 # Tomcat Datasource JNDI
 ```
