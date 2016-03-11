@@ -25,10 +25,8 @@ WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername , LoginServ
 
 WebSecurityConfigSwicthHttps , HttpsLoginSuccessHandler<br>
 1. Disable Session Fixation Attack Protection<br>
-http.sessionManagement().sessionFixation().none()
-
-2. Re-Create Session Cookie <br>
-
+http.sessionManagement().sessionFixation().none()<br><br>
+2. Re-Create Session Cookie
 
 # Tomcat Datasource JNDI
 ```
