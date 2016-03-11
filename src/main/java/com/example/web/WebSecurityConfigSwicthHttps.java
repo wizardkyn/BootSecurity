@@ -49,6 +49,7 @@ public class WebSecurityConfigSwicthHttps extends WebSecurityConfigurerAdapter {
                 .permitAll();
     	
     	http.requiresChannel().antMatchers("/login.do","/authLogin.do","/logout.do").requiresSecure();
+    	http.portMapper().http(8080).mapsTo(8443);
     	http.sessionManagement().sessionFixation().none();
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");
