@@ -25,7 +25,7 @@ WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername , LoginServ
 
 WebSecurityConfigSwicthHttps , HttpsLoginSuccessHandler<br>
 1. Disable Session Fixation Attack Protection<br>
-http.sessionManagement().sessionFixation().none()
+http.sessionManagement().sessionFixation().none()<br>
 
 2. Re-Create Session Cookie <br>
 
