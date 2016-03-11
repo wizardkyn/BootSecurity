@@ -13,9 +13,9 @@ import com.example.web.login.CustomWebAuthenticationDetailsSource;
 import com.example.web.login.LoginService;
 import com.example.web.login.LoginSuccessHandler;
 
-//// with CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails , LoginSuccessHandler
-//@Configuration
-//@EnableWebSecurity
+// with CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails , LoginSuccessHandler
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfigDetailsSource extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;

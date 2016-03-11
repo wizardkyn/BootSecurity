@@ -13,7 +13,7 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 		myField = request.getParameter("myfield");
 	}
 
-	public String getGcmId() {
+	public String getMyField() {
 		return myField;
 	}
 }

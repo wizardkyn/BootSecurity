@@ -10,6 +10,17 @@ Logback<br>
 External Tomcat 8<br>
 Test URL : http://localhost:8080/BootSecurity/login.do
 
+# How to add support for extra login fields in Spring Security Login Form
+
+. UsernamePasswordAuthenticationFilter + HTTP Session
+WebSecurityConfigAnotherParam , AuthenticationFilterAnotherParam
+
+. AuthenticationDetailsSource + SavedRequestAwareAuthenticationSuccessHandler
+WebSecurityConfigDetailsSource , CustomWebAuthenticationDetailsSource , CustomWebAuthenticationDetails
+
+. UsernamePasswordAuthenticationFilter + UserDetailsService().loadUserByUsername
+WebSecurityConfigObtainUsername , AuthenticationFilterObtainUsername
+
 # Tomcat Datasource JNDI
 ```
 <GlobalNamingResources>

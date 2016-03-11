@@ -33,12 +33,14 @@ public class LoginService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		try {
+//	with WebSecurityConfigObtainUsername
+//			String[] split = userId.split(delimiter);
+//			if (split == null || split.length != 2) throw new UsernameNotFoundException("Not Found ID : " + userId);
+//			UserVo domainUser = getUser(split[0]);
+//			System.out.println("loadUserByUsername myField = " + split[1]);
 
-			String[] split = userId.split(delimiter);
-			if (split == null || split.length != 2) throw new UsernameNotFoundException("Not Found ID : " + userId);
-			
-			UserVo domainUser = getUser(split[0]);
-			System.out.println("loadUserByUsername myField = " + split[1]);
+//	with WebSecurityConfigDetailsSource , WebSecurityConfigAnotherParam
+			UserVo domainUser = getUser(userId);
 
 			boolean enabled = true;
 			boolean accountNonExpired = true;

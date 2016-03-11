@@ -13,9 +13,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.web.login.LoginService;
 
-// with AuthenticationFilterObtainUsername , LoginService
-@Configuration
-@EnableWebSecurity
+//// with AuthenticationFilterObtainUsername , LoginService
+//@Configuration
+//@EnableWebSecurity
 public class WebSecurityConfigObtainUsername extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
