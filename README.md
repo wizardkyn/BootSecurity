@@ -1,5 +1,15 @@
-# BootSecurity
-Spring Boot Web with Spring Security Using Login Form and Mysql 
+# BootSecurity & Remember Me
+Spring Boot Web with Spring Security Using Login Form and Mysql<br>
+Simple Hash-Based Token Approach : WebSecurityConfigRememberMe.java<br>
+Persistent Token Approach : WebSecurityConfigRememberMePersistent.java
+```
+create table persistent_logins (
+    username varchar(64) not null, 
+    series varchar(64) primary key, 
+    token varchar(64) not null, 
+    last_used timestamp not null
+);
+```
 
 # Environment
 Spring Boot 1.4.0 , Spring Security 4.0.3<br>
