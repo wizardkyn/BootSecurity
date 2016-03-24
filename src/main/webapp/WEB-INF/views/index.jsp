@@ -14,6 +14,6 @@
 </head>
 <body>
 <h1>Welcome You !!</h1>
-<h2><a href='<c:url value="logout.do"/>'>Log Out</a></h2>
+<h2><a href='<c:url value="/logout.do"/>'>Log Out</a></h2>
 </body>
 </html>

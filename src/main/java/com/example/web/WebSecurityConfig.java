@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.example.web.login.LoginService;
 
@@ -28,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.do")
                 .failureUrl("/login.do?error")
                 .loginProcessingUrl("/authLogin.do")
-                .defaultSuccessUrl("/index.do",true)  // true : always-use-default-target
+                .defaultSuccessUrl("/web/index.do",true)  // true : always-use-default-target
                 .permitAll()
                 .and()
             .logout()
@@ -37,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();
+        
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");
     }
