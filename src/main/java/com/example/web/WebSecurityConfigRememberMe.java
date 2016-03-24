@@ -11,9 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.example.web.login.LoginService;
 
-//@Configuration
-//@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfigRememberMe extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
     
@@ -30,16 +30,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.do")
                 .failureUrl("/login.do?error")
                 .loginProcessingUrl("/authLogin.do")
-                .defaultSuccessUrl("/web/index.do",true) 
+                .defaultSuccessUrl("/web/index.do",true)
                 .permitAll()
                 .and()
             .logout()
                 .logoutUrl("/logout.do")
                 .logoutSuccessUrl("/login.do?logout")
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
-        
+                .deleteCookies("JSESSIONID","remember-me")
+                .permitAll()
+                .and()
+            .rememberMe()
+                .key("myAppKey")
+                .rememberMeParameter("remember-me")
+                .tokenValiditySeconds(86400); // 1 day
+ 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
         http.exceptionHandling().accessDeniedPage("/login.do?error");
         http.sessionManagement().invalidSessionUrl("/login.do");

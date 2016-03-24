@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Index</title>
+    <title>Sign Up</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/webjars/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -51,40 +50,39 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<script>
-$(function() {
-	$('#logout').click(function() {
-	   window.location.href = '<c:url value="/logout.do"/>';
-	});
-});
-</script>
 </head>
 <body>
-<!-- Page Content -->
-<div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Welcome You!</h1>
-	<sec:authorize access="isRememberMe()">
-		<h2># This user is login by "Remember Me Cookies".</h2>
-	</sec:authorize>
-
-	<sec:authorize access="isFullyAuthenticated()">
-		<h2># This user is login by username / password.</h2>
-	</sec:authorize>
-	            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <button type="button" id="logout" class="btn btn-primary btn-lg btn-block">Log Out</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Create an account</h3>
+                </div>
+                <div class="panel-body">
+                	<c:url value="/signupProc.do" var="actionUrl"/>
+					<form role="form" action="${actionUrl}" method="post">       
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password1" type="password" value="">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Re-Password" name="password2" type="password" value="">
+                            </div>
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6LdolBsTAAAAAMjLSWsQzA1zdwomcHtmyrTTkkrC"></div>
+                            </div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button type="submit" class="btn btn-lg btn-success btn-block">Sign Up</button>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <!-- /.container-fluid -->
 </div>
-<!-- /#page-wrapper -->
 </body>
 </html>
