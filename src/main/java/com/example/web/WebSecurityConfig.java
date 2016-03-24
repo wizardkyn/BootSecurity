@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.do")
                 .failureUrl("/login.do?error")
                 .loginProcessingUrl("/authLogin.do")
-                .defaultSuccessUrl("/web/index.do",true)  // true : always-use-default-target
+                .defaultSuccessUrl("/web/index.do",true) 
                 .permitAll()
                 .and()
             .logout()
